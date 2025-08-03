@@ -1,0 +1,12 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#1a1a1a"/>
+  <rect x="50" y="50" width="700" height="80" fill="#2d2d2d" rx="10"/>
+  <text x="400" y="100" text-anchor="middle" fill="dodgerblue" font-size="24" font-family="Arial">Tradens Trading Interface</text>
+  <rect x="50" y="150" width="350" height="200" fill="#333" rx="5"/>
+  <text x="225" y="180" text-anchor="middle" fill="white" font-size="14">Price Chart</text>
+  <polyline points="70,320 120,280 170,300 220,250 270,270 320,230 370,240" stroke="dodgerblue" stroke-width="2" fill="none"/>
+  <rect x="420" y="150" width="330" height="200" fill="#333" rx="5"/>
+  <text x="585" y="180" text-anchor="middle" fill="white" font-size="14">Order Book</text>
+  <rect x="50" y="370" width="700" height="180" fill="#333" rx="5"/>
+  <text x="400" y="400" text-anchor="middle" fill="white" font-size="14">Portfolio Overview</text>
+</svg>

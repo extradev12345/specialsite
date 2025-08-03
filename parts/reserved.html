@@ -1,0 +1,44 @@
+<script>
+
+function displayMessages() {
+                const container = document.getElementById('messagesContainer');
+                
+                if (this.messages.length === 0) {
+                    container.innerHTML = `
+                        <div class="no-messages">
+                            <i class="fa fa-solid fa-inbox"></i>
+                            <p>No messages yet. Be the first to send one!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = this.messages.map(msg => `
+                    <div class="message-item ${msg.read ? 'read' : 'unread'}">
+                        <div class="message-header">
+                            <div class="sender-info">
+                                <i class="fa fa-solid fa-user"></i>
+                                <strong>${this.escapeHtml(msg.name)}</strong>
+                                <span class="email">(${this.escapeHtml(msg.email)})</span>
+                            </div>
+                            <div class="message-time">
+                                <i class="fa fa-solid fa-clock"></i>
+                                ${this.formatDate(msg.timestamp)}
+                            </div>
+                        </div>
+                        <div class="message-content">
+                            ${this.escapeHtml(msg.message)}
+                        </div>
+                        <div class="message-actions">
+                            <button class="btn-small" onclick="messageManager.markAsRead(${msg.id})">
+                                <i class="fa fa-solid fa-check"></i> Mark as Read
+                            </button>
+                            <button class="btn-small delete" onclick="messageManager.deleteMessage(${msg.id})">
+                                <i class="fa fa-solid fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+        </script>

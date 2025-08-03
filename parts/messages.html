@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../assets/css/pages.css" />
+  <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
+  <title>Contact Me</title>
+</head>
+<body>
+
+  <div class="card">
+    <h2><i class="fa-solid fa-envelope"></i> Contact Me</h2>
+    <p>Send me a message and I’ll reply to your email!</p>
+  </div>
+
+  <!-- Contact Form -->
+  <div class="card">
+    <form action="https://formspree.io/f/mkgzvyee"  style="width: 90%;" method="POST" class="message-form">
+      <textarea name="message" placeholder="Write your message here..." required></textarea>
+      <div class="card column form-inputs" style="width: 100%;">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="_replyto" placeholder="Your Email" required />
+        <input type="hidden" name="_subject" value="New Message from Portfolio Form" />
+        <input type="hidden" name="_next" value="thankyou.html" />
+        <button type="submit" class="btn">
+          <i class="fa-solid fa-paper-plane"></i> Send Message
+        </button>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>

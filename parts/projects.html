@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papMZQyxj9DhRhUK+lU2q2ynj/hLxIkZZTjpsZGXUkaYY2Hx4r7FUuYIT/vh28QCE1wyK4c6+LZ/3eZl7N0hKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>Projects --visit my github repo <a href="https://github.com/extradev12345/">Extradev12345</a></title>
+</head>
+<body>
+
+    <div class="card">
+        <h2><i class="fa fa-solid fa-project-diagram"></i> My Projects Portfolio</h2>
+        <p>Explore my collection of projects with interactive galleries and downloadable resources.</p>
+    </div>
+
+    <div id="projectsContainer">
+        <div class="loading-spinner">
+            <i class="fa fa-solid fa-spinner fa-spin"></i>
+            <p>Loading projects...</p>
+        </div>
+    </div>
+
+    <div id="slideshowModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="slideshow-container">
+                <div class="slide-counter">
+                    <span id="currentSlide">1</span> / <span id="totalSlides">1</span>
+                </div>
+                <div class="slides-wrapper">
+                    <img id="modalImage" src="" alt="Project Image">
+                </div>
+                <button class="slide-nav prev" onclick="changeSlide(-1)">
+                    <i class="fa fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="slide-nav next" onclick="changeSlide(1)">
+                    <i class="fa fa-solid fa-chevron-right"></i>
+                </button>
+                <div class="slide-thumbnails" id="slideThumbnails"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class ProjectsManager {
+            constructor() {
+                this.projects = [];
+                this.currentSlideIndex = 0;
+                this.currentProjectImages = [];
+                this.loadProjects();
+            }
+
+            async loadProjects() {
+                try {
+                    const response = await fetch('../assets/data/projects.json');
+                    const data = await response.json();
+                    this.projects = data.projects;
+                    this.renderProjects();
+                } catch (error) {
+                    console.error('Error loading projects:', error);
+                    this.renderError();
+                }
+            }
+
+            renderProjects() {
+                const container = document.getElementById('projectsContainer');
+                container.innerHTML = this.projects.map(project => `
+                    <div class="project-card" data-project-id="${project.id}">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i class="fa fa-solid fa-${this.getProjectIcon(project.category)}"></i>
+                            </div>
+                            <div class="project-title">
+                                <h3>${project.name}</h3>
+                                <div class="project-meta">
+                                    <span class="project-year">${project.year}</span>
+                                    <span class="project-status ${project.status.toLowerCase().replace(' ', '-')}">${project.status}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="project-description">
+                            <p>${project.description}</p>
+                        </div>
+                        
+                        <div class="project-technologies">
+                            ${project.technologies.map(tech => `<span class="tech-badge">${tech}</span>`).join('')}
+                        </div>
+                        
+                        <div class="project-gallery">
+                            <h4><i class="fa fa-solid fa-images"></i> Project Gallery</h4>
+                            <div class="gallery-grid">
+                                ${project.images.map((image, index) => `
+                                    <div class="gallery-item" onclick="projectsManager.openSlideshow('${project.id}', ${index})">
+                                        <div class="gallery-placeholder">
+                                            <i class="fa fa-solid fa-image"></i>
+                                            <span style="font-size: small;">Screenshot ${index + 1}</span>
+                                        </div>
+                                        <div class="gallery-overlay">
+                                            <i class="fa fa-solid fa-search-plus"></i>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            renderError() {
+                const container = document.getElementById('projectsContainer');
+                container.innerHTML = `
+                    <div class="error-message">
+                        <i class="fa fa-solid fa-exclamation-triangle"></i>
+                        <h3>Error Loading Projects</h3>
+                        <p>Unable to load project data. Please try again later.</p>
+                    </div>
+                `;
+            }
+
+            getProjectIcon(category) {
+                const icons = {
+                    'Web Application': 'globe',
+                    'Financial Technology': 'chart-line',
+                    'Desktop Applications': 'desktop',
+                    'Web Development': 'code'
+                };
+                return icons[category] || 'project-diagram';
+            }
+
+            getDownloadIcon(type) {
+                const icons = {
+                    'source': 'code',
+                    'documentation': 'file-pdf',
+                    'database': 'database',
+                    'demo': 'play-circle',
+                    'tools-pack': 'toolbox',
+                    'assets': 'folder'
+                };
+                return icons[type] || 'download';
+            }
+
+            formatDownloadType(type) {
+                const formats = {
+                    'source': 'Source Code',
+                    'documentation': 'Documentation',
+                    'database': 'Database',
+                    'demo': 'Demo Version',
+                    'tools-pack': 'Tools Package',
+                    'assets': 'Assets Package'
+                };
+                return formats[type] || type.charAt(0).toUpperCase() + type.slice(1);
+            }
+
+            openSlideshow(projectId, startIndex = 0) {
+                const project = this.projects.find(p => p.id === projectId);
+                if (!project) return;
+
+                this.currentProjectImages = project.images;
+                this.currentSlideIndex = startIndex;
+                
+                const modal = document.getElementById('slideshowModal');
+                const totalSlides = document.getElementById('totalSlides');
+                const thumbnailsContainer = document.getElementById('slideThumbnails');
+                
+                totalSlides.textContent = this.currentProjectImages.length;
+                
+                thumbnailsContainer.innerHTML = this.currentProjectImages.map((image, index) => `
+                    <div class="thumbnail ${index === startIndex ? 'active' : ''}" onclick="projectsManager.goToSlide(${index})">
+                        <div class="thumbnail-placeholder">
+                            <i class="fa fa-solid fa-image"></i>
+                        </div>
+                    </div>
+                `).join('');
+                
+                this.updateSlide();
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+
+            closeSlideshow() {
+                const modal = document.getElementById('slideshowModal');
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            changeSlide(direction) {
+                this.currentSlideIndex += direction;
+                if (this.currentSlideIndex >= this.currentProjectImages.length) {
+                    this.currentSlideIndex = 0;
+                } else if (this.currentSlideIndex < 0) {
+                    this.currentSlideIndex = this.currentProjectImages.length - 1;
+                }
+                this.updateSlide();
+            }
+
+            goToSlide(index) {
+                this.currentSlideIndex = index;
+                this.updateSlide();
+            }
+
+            updateSlide() {
+                const modalImage = document.getElementById('modalImage');
+                const currentSlide = document.getElementById('currentSlide');
+                const thumbnails = document.querySelectorAll('.thumbnail');
+                
+                modalImage.src = this.currentProjectImages[this.currentSlideIndex];
+                modalImage.alt = `Project Image ${this.currentSlideIndex + 1}`;
+                currentSlide.textContent = this.currentSlideIndex + 1;
+                
+                thumbnails.forEach((thumb, index) => {
+                    thumb.classList.toggle('active', index === this.currentSlideIndex);
+                });
+            }
+
+            downloadFile(link, type) {
+                const notification = document.createElement('div');
+                notification.className = 'download-notification';
+                notification.innerHTML = `
+                    <i class="fa fa-solid fa-download"></i>
+                    <span>Downloading ${this.formatDownloadType(type)}...</span>
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.innerHTML = `
+                        <i class="fa fa-solid fa-check"></i>
+                        <span>Download would start for ${this.formatDownloadType(type)}</span>
+                    `;
+                }, 1000);
+                
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 3000);
+                
+                console.log(`Download initiated for: ${link}`);
+            }
+
+            viewProject(projectId) {
+                const project = this.projects.find(p => p.id === projectId);
+                if (!project) return;
+                
+                alert(`Project: ${project.name}\n\nDescription: ${project.description}\n\nTechnologies: ${project.technologies.join(', ')}\n\nStatus: ${project.status}\nYear: ${project.year}`);
+            }
+        }
+
+        let projectsManager;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            projectsManager = new ProjectsManager();
+            
+            const modal = document.getElementById('slideshowModal');
+            const closeBtn = document.querySelector('.close-modal');
+            
+            closeBtn.addEventListener('click', () => projectsManager.closeSlideshow());
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    projectsManager.closeSlideshow();
+                }
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (modal.style.display === 'block') {
+                    if (e.key === 'Escape') {
+                        projectsManager.closeSlideshow();
+                    } else if (e.key === 'ArrowLeft') {
+                        projectsManager.changeSlide(-1);
+                    } else if (e.key === 'ArrowRight') {
+                        projectsManager.changeSlide(1);
+                    }
+                }
+            });
+        });
+
+        function changeSlide(direction) {
+            projectsManager.changeSlide(direction);
+        }
+    </script>
+    
+    <div class="card">
+        SDS is now in use at Mzumbe specialschool. Live at <a href="https://sds.mzumbesec.sc.tz/sds/login.php">
+            https://sds.mzumbesec.sc.tz
+        </a>
+    </div>
+
+</body>
+</html>

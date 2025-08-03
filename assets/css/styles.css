@@ -1,0 +1,197 @@
+* {
+    transition: 1s;
+    font-family: verdana;
+    background-color: #141414;
+    color: dodgerblue;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, dodgerblue, #4169e1);
+    border-radius: 10px;
+    border: 2px solid #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #4169e1, #6495ed);
+}
+
+::-webkit-scrollbar-corner {
+    background: #1a1a1a;
+}
+
+body {
+    transition: 1s;
+    padding: 0px;
+    margin: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.row {
+    transition: 1s;
+    display: flex;
+    flex-direction: row;
+}
+
+.column {
+    transition: 1s;
+    display: flex;
+    flex-direction: column;
+}
+
+.center {
+    transition: 1s;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    transition: 1s;
+    height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.topnav {
+    transition: 1s;
+    width: 100%;
+    margin: 0px;
+    max-height: 10%;
+    min-height: 10%;
+    position: fixed;
+}
+
+.maincontainer {
+    transition: 1s;
+    height: 85%;
+    background-color: black;
+    left: 0px;
+    border-radius: 0px;
+    overflow-y: hidden;
+    width: 100%;
+    left: -5px;
+    margin: 0px;
+    border: 0px;
+    margin-top: 5%;
+}
+
+.footer {
+    transition: 1s;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: #141415;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.pill {
+    transition: 1s;
+    background-color: dodgerblue;
+    color: #141414;
+    padding: 10px;
+    border-radius: 25px;
+    border: 3px solid dodgerblue;
+    cursor: help;
+}
+
+.pill:hover {
+    transition: 1s;
+    background-color: #141414;
+    color: dodgerblue;
+}
+
+.header {
+    transition: 1s;
+    font-size: xx-large;
+}
+
+.menu-fav {
+    transition: 1s;
+    font-size: 100px;
+}
+
+.menu-item {
+    transition: 1s;
+    margin: 10px;
+    border: 13px solid dodgerblue;
+    height: fit-content!important;
+    max-height: 160px;
+    max-width: 160px;
+}
+
+.menu-item:hover *, .menu-item:hover {
+    transition: 1s;
+    background-color: dodgerblue;
+    color: black;
+}
+
+.links {
+    transition: 1s;
+    text-decoration: none!important;
+    display: flex;
+}
+
+.topnav-item-menu {
+    transition: 1s;
+    text-decoration: none;
+    max-width: 30%;
+    max-height: 30px;
+    padding: 10px;
+}
+
+.topnav-item-menu:hover, .link-active {
+    transition: 1s;
+    max-width: 30%;
+    max-height: 30px;
+    font-size: large;
+    border-bottom: 3px solid dodgerblue;
+}
+
+@media only screen and (max-width: 600px){
+  .card {
+    transition: 1s;
+    transition: 1s;
+    margin: 0px!important;
+  }   
+  body {
+    transition: 1s;
+    padding: 0px;
+  }
+  .topnav {
+    transition: 1s;
+    transition: 1s;
+    flex-direction: column;
+    max-height: 60%;
+    gap: 3px!important;
+  }
+  
+  .maincontainer {
+    transition: 1s;
+    transition: 1s;
+    padding: 0px;
+    margin-top: 30%;
+  }
+
+  .header {
+    transition: 1s;
+    transition: 1s;
+    width: 100%;
+    text-align: left;
+    padding-left: 15px;
+    padding-left: 10px;
+  }
+}

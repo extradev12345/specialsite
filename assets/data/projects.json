@@ -1,0 +1,24 @@
+{
+  "projects": [
+    {
+      "id": "sds",
+      "name": "SDS - Student Data System",
+      "description": "A comprehensive management system designed specifically for Mzumbe Secondary School. This system helps manage student data, academic records, and administrative tasks efficiently.",
+      "technologies": ["PHP", "MySQL", "HTML", "CSS", "JavaScript"],
+      "status": "Completed",
+      "year": "2024",
+      "category": "Web Application",
+      "images": [
+        "assets/images/projects/sds/dashboard.jpg",
+        "assets/images/projects/sds/student-list.jpg",
+        "assets/images/projects/sds/reports.jpg",
+        "assets/images/projects/sds/login.jpg"
+      ],
+      "downloadLinks": {
+        "source": "assets/downloads/sds-source.zip",
+        "documentation": "assets/downloads/sds-docs.pdf",
+        "database": "assets/downloads/sds-database.sql"
+      }
+    }
+  ]
+}
